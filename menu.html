@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <section class="menu-section">
+        <div class="menu">
+            <a href="index.html"><h1 class="back"><i class="fa-solid fa-angle-left"></i> Continue Shopping</h1></a>
+            <hr class="divider">
+            <div class="shopping-cart">
+                <h1 class="cart-title">Shopping Cart</h1>
+                <p class="cart-quantity">You have 3 items in your cart</p>
+            </div>
+            <div class="order-container">        
+            </div>
+        </div>
+        <div class="invoice">
+            <h2 class="invoice-header">Card Details</h2>
+            <h3 class="type">Card type</h3>
+            <div class="card-type">
+                <button class="mastercard">
+                    <img src="imazhet/mastercard.png" alt="Mastercard">
+                </button>
+                <button class="visa"><img src="imazhet/visa.png" alt="Visa Card"></button>
+                <button class="rupay">
+                        <img src="imazhet/rupay.png">
+                </button>
+                <div class="see-all">
+                    <h3 class="see"><a href="">See All</a></h3>
+                </div>
+            </div>
+            <div id="payment-modal" class="modal">
+                <div class="modal-content">
+                    <form id="payment-form" class="payment-form">
+                        <div class="form-group">
+                            <label for="card-name">
+                                <p class="label-text">Name on Card</p>
+                                <input type="text" id="card-name" name="card-name" placeholder="Name" required/>
+                                <div class="error-message" id="name-error">Name should be filled</div>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number"><p class="label-text">Card Number</p> 
+                            <input type="text" id="card-number" name="card-number" placeholder="1111 2222 3333 4444" required/>
+                            <div class="error-message" id="card-number-error">Card number should be filled correctly</div>
+                        </label>
+                        </div>
+                        <div class="expiration-cvv">
+                        <div class="form-group">
+                            <label for="expiration-date"><p class="label-text">Expiration Date</p></label>
+                            <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YY" required />
+                            <div class="error-message" id="expiration-date-error">Expiration date should be filled correctly</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv"><p class="label-text">CVV</p></label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="3" required />
+                            <div class="error-message" id="cvv-error">CVV should be filled correctly</div>
+                        </div>
+                    </div>
+                    </form>
+                    </div>               
+            </div>
+            <hr class="invoice-divider">
+            <div class="payment-summary">
+                <div class="summary-detail">
+                    <p class="text-gray">SubTotal</p>
+                    <p class="subtotal-value">$131.2</p> <!-- Add specific class here -->
+                </div>
+                <div class="summary-detail">
+                    <p class="text-gray">Tax</p>
+                    <p class="tax-value">$5.2</p> <!-- Add specific class here -->
+                </div>
+                <div class="summary-total">
+                    <p class="text-gray">Total Payment</p>
+                    <p class="total-value">$136.4</p> <!-- Add specific class here -->
+                </div>
+                <button class="pay-button">
+                    <div class="checkout">
+                        <h2 class="checkout-total">$1,672</h2> <!-- Add specific class here -->
+                        <h2>Checkout</h2>
+                    </div>
+                </button>
+            </div>
+            
+            
+        </div>
+   </section>
+   <div class="success-modal" id="success-modal">
+        <div class="modal-name">
+            <h3>Order has been paid successfully</h3>
+            <div class="checkmark">
+            <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
+    </div>
+
+   <script src="js/menu.js"></script>
+   <script src="js/payment.js"></script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+
+    
+</body>
+</html>
