@@ -1,260 +1,302 @@
-// Funksioni per te marre kategorite dhe per ti shfaq ato ne menyre dinamike
-async function fetchCategories() {
-    const categoriesContainer = document.getElementById("categories-container");
+// Ensure the DOM is fully loaded before running any script
+document.addEventListener("DOMContentLoaded", () => {
+    // Function to fetch categories and display them dynamically
+    async function fetchCategories() {
+        const categoriesContainer = document.getElementById("categories-container");
 
-    try {
-        const response = await fetch("https://dummyjson.com/products/categories"); // Zgjidhni API-ne tuaj te vertete
-        const categories = await response.json();
+        try {
+            const response = await fetch("https://dummyjson.com/products/categories"); // Choose your actual API
+            const categories = await response.json();
 
-        // Ruani butonat e kategorive per t'i perdorur me vone
-        const categoryButtons = [];
+            // Store category buttons for later use
+            const categoryButtons = [];
 
-        // Krijo dhe shto butonin "All", dhe beje aktiv ne fillim
-        const allButton = document.createElement("button");
-        allButton.classList.add("menu-category");
-        allButton.textContent = "All";
-        allButton.classList.add("active"); // Beje butonin "All" aktiv ne fillim
+            // Create and add the "All" button, and make it active initially
+            const allButton = document.createElement("button");
+            allButton.classList.add("menu-category");
+            allButton.textContent = "All";
+            allButton.classList.add("active"); // Make the "All" button active initially
 
-        // Shto event listener per butonin "Te gjithe"
-        allButton.addEventListener("click", () => {
-            // Hiq klasat 'active' nga te gjitha butonat e kategorive
-            categoryButtons.forEach(buttonObj => buttonObj.categoryButton.classList.remove("active"));
-
-            // Shto klasat 'active' tek butoni "Te gjithe"
-            allButton.classList.add("active");
-
-            // Merr dhe shfaq produktet nga te gjitha kategorite
-            fetchAllProducts();
-        });
-
-        // Shto butonin "Te gjithe" ne kontejner
-        categoriesContainer.appendChild(allButton);
-
-        categories.forEach((category, index) => {
-            const categoryButton = document.createElement("button");
-            categoryButton.classList.add("menu-category");
-            categoryButton.textContent = category.name;
-
-            // Shto butonin e kategorise ne listen
-            categoryButtons.push({ categoryButton, category });
-
-            // Shto event listener per butonat e kategorive
-            categoryButton.addEventListener("click", () => {
-                // Hiq klasat 'active' nga te gjitha butonat e kategorive
+            // Add event listener for the "All" button
+            allButton.addEventListener("click", () => {
+                // Remove 'active' classes from all category buttons
                 categoryButtons.forEach(buttonObj => buttonObj.categoryButton.classList.remove("active"));
 
-                // Hiq klasat 'active' nga butoni "Te gjithe" nese klikohet
-                allButton.classList.remove("active");
+                // Add 'active' class to the "All" button
+                allButton.classList.add("active");
 
-                // Shto klasat 'active' tek butoni i klikuar
-                categoryButton.classList.add("active");
-
-                // Merr produktet per kategorine e zgjedhur
-                fetchProducts(category.slug);
+                // Fetch and display products from all categories
+                fetchAllProducts();
             });
 
-            categoriesContainer.appendChild(categoryButton);
-        });
-    } catch (error) {
-        console.error("Error fetching categories:", error);
-    }
-}
+            // Append the "All" button to the container
+            categoriesContainer.appendChild(allButton);
 
-// Funksioni per te marre te gjitha produktet nga cdo kategori dhe i shfaq ato
-async function fetchAllProducts() {
-    const productsContainer = document.getElementById("products-container");
+            categories.forEach((category, index) => {
+                const categoryButton = document.createElement("button");
+                categoryButton.classList.add("menu-category");
+                categoryButton.textContent = category.name;
 
-    // Fshi produktet e meparshme
-    productsContainer.innerHTML = '';
+                // Add the category button to the list
+                categoryButtons.push({ categoryButton, category });
 
-    try {
-        const response = await fetch("https://dummyjson.com/products");
-        const data = await response.json();
-        const products = data.products;
+                // Add event listener for category buttons
+                categoryButton.addEventListener("click", () => {
+                    // Remove 'active' classes from all category buttons
+                    categoryButtons.forEach(buttonObj => buttonObj.categoryButton.classList.remove("active"));
 
-        products.forEach(product => {
-            // Krijo kartelen e produktit
-            const productCard = document.createElement("div");
-            productCard.classList.add("grid-item");
+                    // Remove 'active' class from the "All" button if clicked
+                    allButton.classList.remove("active");
 
-            // Krijo imazhin e produktit
-            const productImage = document.createElement("img");
-            productImage.src = product.thumbnail;
-            productImage.alt = product.title;
+                    // Add 'active' class to the clicked button
+                    categoryButton.classList.add("active");
 
-            // Krijo kontejnerin e informacionit per artikujt
-            const itemInfo = document.createElement("div");
-            itemInfo.classList.add("item-info");
+                    // Fetch products for the selected category
+                    fetchProducts(category.slug);
+                });
 
-            // Krijo titullin e produktit
-            const productTitle = document.createElement("h3");
-            productTitle.classList.add("item-title");
-            productTitle.textContent = product.title.length > 20 ? product.title.substring(0, 20) + "..." : product.title;
-
-            // Krijo pershkrimin e produktit
-            const productDescription = document.createElement("p");
-            productDescription.classList.add("item-description");
-            productDescription.textContent = product.description.length > 20 ? product.description.substring(0, 20) + "..." : product.description;
-
-            // Krijo cmimin dhe kontejnerin e butonit per ta shtuar ne karroce
-            const priceAndButtonContainer = document.createElement("div");
-            priceAndButtonContainer.classList.add("price-and-button-container");
-
-            // Krijo cmimin e produktit
-            const productPrice = document.createElement("p");
-            productPrice.classList.add("item-price");
-            productPrice.textContent = `$${product.price.toFixed(2)}`;
-
-            // Krijo butonin per ta shtuar ne karroce
-            const addToCartButton = document.createElement("button");
-            addToCartButton.classList.add("add-to-cart");
-            addToCartButton.textContent = "Add to Cart";
-            addToCartButton.addEventListener("click", () => addToCart(product));
-
-            // Krijo ikonen e Gratipay
-            const gratipayIcon = document.createElement("i");
-            gratipayIcon.classList.add("fa-brands", "fa-gratipay");
-
-            // Shto cmimin dhe butonin per ta shtuar ne karroce ne kontejner
-            priceAndButtonContainer.appendChild(productPrice);
-            priceAndButtonContainer.appendChild(addToCartButton);
-            priceAndButtonContainer.appendChild(gratipayIcon);
-
-            // Shto titullin, pershkrimin dhe kontejnerin e cmimit/butonit ne informacionin e artikujve
-            itemInfo.appendChild(productTitle);
-            itemInfo.appendChild(productDescription);
-            itemInfo.appendChild(priceAndButtonContainer);
-
-            // Shto imazhin dhe informacionin per artikujt ne kartelen e produktit
-            productCard.appendChild(productImage);
-            productCard.appendChild(itemInfo);
-
-            // Shtoni kartelen e produktit ne kontejnerin e produkteve
-            productsContainer.appendChild(productCard);
-        });
-    } catch (error) {
-        console.error("Error fetching all products:", error);
-    }
-}
-
-// Funksioni per te marre produktet per nje kategorie te caktuar dhe i shfaq ato
-async function fetchProducts(categorySlug) {
-    const productsContainer = document.getElementById("products-container");
-
-    // Fshi produktet e meparshme
-    productsContainer.innerHTML = '';
-
-    try {
-        const response = await fetch(`https://dummyjson.com/products/category/${categorySlug}`);
-        const data = await response.json();
-        const products = data.products;
-
-        products.forEach(product => {
-            // Krijo kartelen e produktit
-            const productCard = document.createElement("div");
-            productCard.classList.add("grid-item");
-
-            // Krijo imazhin e produktit
-            const productImage = document.createElement("img");
-            productImage.src = product.thumbnail;
-            productImage.alt = product.title;
-
-            // Krijo kontejnerin e informacionit per artikujt
-            const itemInfo = document.createElement("div");
-            itemInfo.classList.add("item-info");
-
-            // Krijo titullin e produktit
-            const productTitle = document.createElement("h3");
-            productTitle.classList.add("item-title");
-            productTitle.textContent = product.title.length > 20 ? product.title.substring(0, 20) + "..." : product.title;
-
-            // Krijo pershkrimin e produktit
-            const productDescription = document.createElement("p");
-            productDescription.classList.add("item-description");
-            productDescription.textContent = product.description.length > 20 ? product.description.substring(0, 20) + "..." : product.description;
-
-            // Krijo cmimin dhe kontejnerin e butonit per ta shtuar ne karroce
-            const priceAndButtonContainer = document.createElement("div");
-            priceAndButtonContainer.classList.add("price-and-button-container");
-
-            // Krijo cmimin e produktit
-            const productPrice = document.createElement("p");
-            productPrice.classList.add("item-price");
-            productPrice.textContent = `$${product.price.toFixed(2)}`;
-
-            // Krijo butonin per ta shtuar ne karroce
-            const addToCartButton = document.createElement("button");
-            addToCartButton.classList.add("add-to-cart");
-            addToCartButton.textContent = "Add to Cart";
-            addToCartButton.addEventListener("click", () => addToCart(product));
-
-            // Krijo ikonen e Gratipay
-            const gratipayIcon = document.createElement("i");
-            gratipayIcon.classList.add("fa-brands", "fa-gratipay");
-
-            // Shto cmimin dhe butonin per ta shtuar ne karroce ne kontejner
-            priceAndButtonContainer.appendChild(productPrice);
-            priceAndButtonContainer.appendChild(addToCartButton);
-            priceAndButtonContainer.appendChild(gratipayIcon);
-
-            // Shto titullin, pershkrimin dhe kontejnerin e cmimit/butonit ne informacionin e artikujve
-            itemInfo.appendChild(productTitle);
-            itemInfo.appendChild(productDescription);
-            itemInfo.appendChild(priceAndButtonContainer);
-
-            // Shto imazhin dhe informacionin per artikujt ne kartelen e produktit
-            productCard.appendChild(productImage);
-            productCard.appendChild(itemInfo);
-
-            // Shtoni kartelen e produktit ne kontejnerin e produkteve
-            productsContainer.appendChild(productCard);
-        });
-    } catch (error) {
-        console.error("Error fetching products:", error);
-    }
-}
-
-// Funksioni per te shtuar nje produkt ne karroce
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-function addToCart(product) {
-    const existingProduct = cart.find(item => item.id === product.id);
-
-    if (existingProduct) {
-        existingProduct.quantity++;
-    } else {
-        cart.push({ ...product, quantity: 1 });
+                categoriesContainer.appendChild(categoryButton);
+            });
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+        }
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    // Function to fetch all products from every category and display them
+    async function fetchAllProducts() {
+        const productsContainer = document.getElementById("products-container");
 
-    // Shfaq nje njoftim duke perdorur Toastify
-    Toastify({
-        text: `${product.title} added to cart successfully!`,
-        duration: 3000,
-        close: true,
-        gravity: "top",
-        position: "center",
-        backgroundColor: "linear-gradient(to right, #4a9c80,rgb(50, 163, 123))"
-    }).showToast();
+        // Clear previous products
+        productsContainer.innerHTML = '';
 
-    // Perditeso badge-in e karroces
-    updateCartBadge();
-}
+        try {
+            const response = await fetch("https://dummyjson.com/products");
+            const data = await response.json();
+            const products = data.products;
 
-// Funksioni per te perditesuar numrin e badge-it te karroces
-function updateCartBadge() {
-    const cartBadge = document.getElementById("cart-badge");
+            products.forEach(product => {
+                // Create the product card
+                const productCard = document.createElement("div");
+                productCard.classList.add("grid-item");
 
-    // Merr totalin e artikujve ne karroce
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                // Create the product image
+                const productImage = document.createElement("img");
+                productImage.src = product.thumbnail;
+                productImage.alt = product.title;
 
-    // Perditeso badge-in me numrin total te artikujve
-    cartBadge.textContent = totalItems;
-}
+                // Ensure the product image (thumbnail) click event is properly set
+                productImage.addEventListener("click", (event) => {
+                    // Prevent the default behavior if needed
+                    event.preventDefault();
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchCategories();
-    fetchAllProducts();  // Qe te gjitha produktet te shfaqen fillimisht
-    updateCartBadge(); // Qe badge-i i karroces te perditesohet kur hapet faqja
+                    // Update the cart badge and localStorage before redirection
+                    updateCartBadge();
+
+                    // Store the updated cart in localStorage before redirecting
+                    localStorage.setItem("cart", JSON.stringify(cart));
+
+                    // Redirect to the single-view-page with the product ID
+                    window.location.href = `single.html?productId=${product.id}`;
+                });
+
+                // Create the information container for items
+                const itemInfo = document.createElement("div");
+                itemInfo.classList.add("item-info");
+
+                // Create the product title
+                const productTitle = document.createElement("h3");
+                productTitle.classList.add("item-title");
+                productTitle.textContent = product.title.length > 20 ? product.title.substring(0, 20) + "..." : product.title;
+
+                // Create the product description
+                const productDescription = document.createElement("p");
+                productDescription.classList.add("item-description");
+                productDescription.textContent = product.description.length > 20 ? product.description.substring(0, 20) + "..." : product.description;
+
+                // Calculate the price with tax and discount
+                const priceWithTax = product.price + 0.4; // Add tax
+                const discountPercentage = product.discountPercentage || 0; // Get discount percentage (default to 0 if not available)
+                const discount = priceWithTax * (discountPercentage / 100); // Calculate the discount
+                const finalPrice = priceWithTax - discount; // Final price after discount
+
+                // Create the price and button container
+                const priceAndButtonContainer = document.createElement("div");
+                priceAndButtonContainer.classList.add("price-and-button-container");
+
+                // Create the product price
+                const productPrice = document.createElement("p");
+                productPrice.classList.add("item-price");
+                productPrice.textContent = `$${finalPrice.toFixed(2)}`; // Show the final price with tax and discount
+
+                // Create the button to add to cart
+                const addToCartButton = document.createElement("button");
+                addToCartButton.classList.add("add-to-cart");
+                addToCartButton.textContent = "Add to Cart";
+                addToCartButton.addEventListener("click", () => addToCart(product));
+
+                // Create the Gratipay icon
+                const gratipayIcon = document.createElement("i");
+                gratipayIcon.classList.add("fa-brands", "fa-gratipay");
+
+                // Append price and button to the container
+                priceAndButtonContainer.appendChild(productPrice);
+                priceAndButtonContainer.appendChild(addToCartButton);
+                priceAndButtonContainer.appendChild(gratipayIcon);
+
+                // Append title, description, and price/button container to item info
+                itemInfo.appendChild(productTitle);
+                itemInfo.appendChild(productDescription);
+                itemInfo.appendChild(priceAndButtonContainer);
+
+                // Append the image and item info to the product card
+                productCard.appendChild(productImage);
+                productCard.appendChild(itemInfo);
+
+                // Add the product card to the products container
+                productsContainer.appendChild(productCard);
+            });
+        } catch (error) {
+            console.error("Error fetching all products:", error);
+        }
+    }
+
+    // Function to fetch products for a specific category and display them
+    async function fetchProducts(categorySlug) {
+        const productsContainer = document.getElementById("products-container");
+
+        // Clear previous products
+        productsContainer.innerHTML = '';
+
+        try {
+            const response = await fetch(`https://dummyjson.com/products/category/${categorySlug}`);
+            const data = await response.json();
+            const products = data.products;
+
+            products.forEach(product => {
+                // Create the product card
+                const productCard = document.createElement("div");
+                productCard.classList.add("grid-item");
+
+                // Create the product image
+                const productImage = document.createElement("img");
+                productImage.src = product.thumbnail;
+                productImage.alt = product.title;
+
+                // Add click event to redirect to single-view-page with the product ID
+                productImage.addEventListener("click", () => {
+                    // Redirect to the single-view-page.html and pass the product ID in the query string
+                    window.location.href = `single-view-page.html?productId=${product.id}`;
+                });
+
+                // Create the information container for items
+                const itemInfo = document.createElement("div");
+                itemInfo.classList.add("item-info");
+
+                // Create the product title
+                const productTitle = document.createElement("h3");
+                productTitle.classList.add("item-title");
+                productTitle.textContent = product.title.length > 20 ? product.title.substring(0, 20) + "..." : product.title;
+
+                // Create the product description
+                const productDescription = document.createElement("p");
+                productDescription.classList.add("item-description");
+                productDescription.textContent = product.description.length > 20 ? product.description.substring(0, 20) + "..." : product.description;
+
+                // Calculate the price with tax and discount
+                const priceWithTax = product.price + 0.4; // Add tax
+                const discountPercentage = product.discountPercentage || 0; // Get discount percentage (default to 0 if not available)
+                const discount = priceWithTax * (discountPercentage / 100); // Calculate the discount
+                const finalPrice = priceWithTax - discount; // Final price after discount
+
+                // Create the price and button container
+                const priceAndButtonContainer = document.createElement("div");
+                priceAndButtonContainer.classList.add("price-and-button-container");
+
+                // Create the product price
+                const productPrice = document.createElement("p");
+                productPrice.classList.add("item-price");
+                productPrice.textContent = `$${finalPrice.toFixed(2)}`; // Show the final price with tax and discount
+
+                // Create the button to add to cart
+                const addToCartButton = document.createElement("button");
+                addToCartButton.classList.add("add-to-cart");
+                addToCartButton.textContent = "Add to Cart";
+                addToCartButton.addEventListener("click", () => addToCart(product));
+
+                // Create the Gratipay icon
+                const gratipayIcon = document.createElement("i");
+                gratipayIcon.classList.add("fa-brands", "fa-gratipay");
+
+                // Append price and button to the container
+                priceAndButtonContainer.appendChild(productPrice);
+                priceAndButtonContainer.appendChild(addToCartButton);
+                priceAndButtonContainer.appendChild(gratipayIcon);
+
+                // Append title, description, and price/button container to item info
+                itemInfo.appendChild(productTitle);
+                itemInfo.appendChild(productDescription);
+                itemInfo.appendChild(priceAndButtonContainer);
+
+                // Append the image and item info to the product card
+                productCard.appendChild(productImage);
+                productCard.appendChild(itemInfo);
+
+                // Add the product card to the products container
+                productsContainer.appendChild(productCard);
+            });
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
+
+    // Function to add a product to the cart
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function addToCart(product) {
+        const existingProduct = cart.find(item => item.id === product.id);
+
+        if (existingProduct) {
+            existingProduct.quantity++;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Show a notification using Toastify
+        Toastify({
+            text: `${product.title} added to cart successfully!`,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #4a9c80,rgb(50, 163, 123))"
+        }).showToast();
+
+        // Update the cart badge
+        updateCartBadge();
+    }
+
+    // Function to update the cart badge count
+    function updateCartBadge() {
+        const cartBadge = document.getElementById("cart-badge");
+
+        // Get the total number of items in the cart
+        const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+        // Update the badge with the number of items in the cart
+        cartBadge.textContent = totalItems;
+    }
+
+    // Function to initialize the page
+    function init() {
+        // Fetch categories and initial products
+        fetchCategories();
+        fetchAllProducts();
+
+        // Update the badge at the start
+        updateCartBadge();
+    }
+
+    init();
 });

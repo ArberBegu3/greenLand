@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/css/single.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>
+            Free Transport around the world 
+        </h1>
+        <div class="navbar-row">
+            <h3 class="landing-page">
+                <a href="index.html"><i class="fa-brands fa-envira"></i>Green Land</a>
+            </h3>    
+            <form action="/search" method="GET" class="search">
+                <label for="search"></label>
+                <input type="text" id="search" name="q" placeholder="Search for our products">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <ul class="header-links">
+                <li>
+                    <a title="Wishlist" href=""><i class="fa-solid fa-heart"></i><span id="wish-badge" class="badge">0</span></a>
+                </li>
+                <li><a title="Cart" href="menu.html">
+                    <i class="fa-solid fa-cart-shopping"></i><span id="cart-badge" class="badge">0</span>
+                </a></li>
+            </ul>
+        </div>
+        <nav class="toggle-section">
+            <div class="toggle-container">
+            <div class="toggle">
+                <button class="toggle-btn">
+                    <i class="fa-solid fa-list"></i>
+                    <span class="toggle-categories">Categories</span>
+                </button>
+            </div>
+            <a href=""><div  class="new">What's New?</div></a>
+            <a href=""><div  class="new"><i class="fa-solid fa-gift"></i> Gift Card</div></a>
+            </div>
+            <div class="chat">
+                <a href="">
+                    <div>
+                        <i class="fa-regular fa-message"></i>Chat
+                    </div>
+                </a>
+            </div>
+        </nav>
+    </nav>
+    <section class="master-section">
+        <div class="master-container">
+            <img id="product-image" src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png" alt="master-image" class="product-image">
+        </div>
+        <div class="description-container">
+            <div id="product-category" class="product-category">
+                <a href="https://dummyjson.com/products/category/beauty">Beauty</a>
+            </div>
+            <div id="product-title" class="product-title">
+                Essence Mascara Lash Princess
+            </div>
+            <div class="info">
+            <ul class="product-info">
+                <li class="rate"><a href="">Rate</a></li>
+                <li class="guarantee">1 year guarantee</li>
+                <li class="sku">Code: <span id="product-sku" class="sku-value">RCH45Q1A</span></li>
+            </div>
+            <div class="price-about">
+            <div id="product-price" class="discount">10.76 $</div>
+            <div  class="actual-price">
+                <span id="product-discount" class="price">10.39 $</span>
+                <div class="price-info">
+                        <p class="with-tax">Including Tax</p>
+                        <p class="without-tax">Without Tax 9.99$</p>
+                </div>
+            </div>
+            </div>
+            <div class="in-stock">
+                <div class="stock">
+                    <label class="qty-label">Sasia</label>
+                    <hr>
+                </div>
+                <div class="quantity-selector">
+                    <div class="quantity-selectors">
+                        <input type="button" value="-" class="qty-minus" data-quantity="decrease">
+                        <input type="number" value="1" class="quantity-entered" id="quantity-input">
+                        <input type="button" value="+" class="qty-plus" data-quantity="increase">
+                    </div>
+                    <div class="left-in-stock">
+                       <span id="left-in-stock"> 5 </span> in stock...
+                    </div>
+                </div>
+                <div class="shipping">
+                    <label class="shipping-label"><i class="fa-solid fa-truck"></i>Ships in 1 month</label>
+                    <hr>
+                </div>
+                <div class="return-policy"><a href="">30 days return policy</a></div>
+                </div>
+                <div class="payment">
+                    <div class="pay-navbar">
+                        <hr>
+                        <label class="payment-type">Secure Pay</label>
+                        <hr>
+                    </div>
+                    <div class="buy-options">
+                        <div class="buy">
+                            <button class="buy-now"><i class="fa-solid fa-check"></i> Buy Now</button>
+                            <button class="add-to-cart"><i class="fa-solid fa-cart-arrow-down"></i> Add To Cart</button>
+                        </div>
+                            <div class="wishlist">
+                            <button class="add-to-wishlist"><i class="fa-solid fa-heart-circle-check"></i></button>    
+                            </div>
+                        
+                    </div>
+                </div>
+        </div>
+        </div>
+    </section>
+    <section class="details-section">
+        <div class="description-extra">
+            <h2 class="tab1">
+                <label for="tab1">Description</label>
+            </h2>
+            <p id="product-description">The Essence Mascara Lash Princess is <br>a popular mascara known for its volumizing and <br>lengthening effects. Achieve dramatic lashes with this <br>long-lasting and cruelty-free formula.</p>
+            
+        </div>
+        <div class="details-extra">
+            <h2 class="tab2">
+                <label for="tab2">Details</label>  
+            </h2>
+            <p id="product-details">Width: 23.17<br>
+                Height: 14.43<br>
+                Depth: 28.01<br>
+            </p>
+        </div>
+        <div class="rating-extra">
+            <h2 class="tab3">
+                <label for="tab3">Check our last ratings</label></h2>
+                <p id="product-ratings"> Rating:  5  <i class="fa-regular fa-star-half-stroke"></i>
+                    <br>Comment: Very satisfied!
+                    <br>Date: 2024-05-23.
+                    <br>reviewerName: Scarlett Wright
+                    <br>reviewerEmail: scarlett.wright@x.dummyjson.com
+                </p>
+        </div>
+    </section>
+    <footer class="footer-section">
+        <p>© 2025 GreenLand. All rights reserved.</p>
+        <div class="social-media">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+        </div>
+        <div class="terms-links">
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+    <script src="js/single.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+</body>
+</html>

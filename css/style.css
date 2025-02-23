@@ -160,6 +160,7 @@ body {
     margin: 0 auto;
 }
 
+/* Grid-items */ 
 .grid-item {
     display: flex;
     flex-direction: column;
@@ -176,6 +177,7 @@ body {
     width: 100%;
     height: 380px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .item-info {

@@ -83,7 +83,15 @@ document.querySelector("#success-modal").addEventListener("click", function () {
 const cardNumberInput = document.getElementById("card-number");
 cardNumberInput.addEventListener("input", function (e) {
     let input = e.target.value.replace(/\D/g, ''); // Hiq çdo karakter qe nuk eshte numerik
-    let formattedCardNumber = input.match(/.{1,4}/g)?.join(" ") || input; // Shto hapesire çdo 4 shifra
+
+    // Limit the input to 16 digits
+    if (input.length > 16) {
+        input = input.slice(0, 16); // Keep only the first 16 digits
+    }
+
+    // Formato kartën (krijo hapesira çdo 4 shifra)
+    let formattedCardNumber = input.match(/.{1,4}/g)?.join(" ") || input;
+    
     e.target.value = formattedCardNumber; // Perdor vleren e re ne fushen e inputit
 });
 
@@ -96,4 +104,23 @@ expirationDateInput.addEventListener("input", function (e) {
         input = input.slice(0, 2) + '/' + input.slice(2, 4);
     }
     e.target.value = input; // Perdor vleren e re ne fushen e inputit
+
+    // Expiration month check (MM should be between 01 and 12)
+    if (input.length >= 2) {
+        let month = parseInt(input.slice(0, 2));
+        if (month > 12) {
+            e.target.value = '12/' + input.slice(3, 5); // If month > 12, set to 12
+        }
+    }
+
+    // Expiration year check (YY should be not less than current year)
+    if (input.length === 5) {
+        const currentYear = new Date().getFullYear();
+        const currentYearLastTwoDigits = currentYear % 100; // Get the last two digits of the current year
+        let enteredYear = parseInt(input.slice(3, 5));
+
+        if (enteredYear < currentYearLastTwoDigits) {
+            e.target.value = input.slice(0, 2) + '/' + currentYearLastTwoDigits.toString().padStart(2, '0');
+        }
+    }
 });

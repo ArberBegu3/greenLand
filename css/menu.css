@@ -1,5 +1,6 @@
 @import url("variables.css");
 
+/* Global Styles */
 body {
     overflow-x: hidden;
     font-family: var(--poppins-font);
@@ -13,6 +14,7 @@ a:visited {
     text-decoration: none;
 }
 
+/* Menu Section */
 .menu-section {
     display: flex;
     margin-right: 15px;
@@ -31,6 +33,7 @@ a:visited {
     text-decoration: none;
 }
 
+/* Divider */
 .divider {
     width: 100%;
     margin-top: 50px;
@@ -38,6 +41,7 @@ a:visited {
     border: 1px solid var(--border-color);
 }
 
+/* Shopping Cart Section */
 .shopping-cart {
     display: flex;
     flex-direction: column;
@@ -55,8 +59,10 @@ a:visited {
     font-size: 18px;
 }
 
+/* Order Section */
 .order {
     display: flex;
+    width: fit-content;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
@@ -68,6 +74,10 @@ a:visited {
     margin-bottom: 30px;
 }
 
+.order-name {
+    width: 500px;
+}
+
 .order img {
     width: 120px;
     height: 120px;
@@ -75,8 +85,10 @@ a:visited {
     margin: 10px;
 }
 
+
 .order-details {
     display: flex;
+    width: fit-content;
     justify-content: left;
     align-items: center;
     font-family: var(--poppins-font);
@@ -96,6 +108,7 @@ a:visited {
     font-family: var(--nunnito-font);
 }
 
+/* Quantity Selector Section */
 .quantity-selector {
     display: flex;
     align-items: center;
@@ -142,6 +155,7 @@ a:visited {
     height: 20px; 
 }
 
+/* Price and Delete Section */
 .order-price {
     font-family: var(--raleway-font);
     font-weight: 700;
@@ -191,7 +205,7 @@ a:visited {
     gap: 20px;
 }
 
-.card-type button{
+.card-type button {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -213,6 +227,7 @@ a:visited {
     margin-right: 10px;
 }
 
+/* Modal Section */
 .modal {
     width: 100%;
     box-sizing: border-box;
@@ -240,6 +255,7 @@ a:visited {
     margin-left: 20px;
 }
 
+/* Expiration and CVV Section */
 .expiration-cvv {
     display: flex;
     width: 100%;
@@ -266,12 +282,14 @@ p.label-text.error {
     display: none; 
 }
 
+/* Invoice Divider */
 .invoice-divider {
     border: 1.5px solid #5F65C3;
     width: 95%;
     margin-top: 60px;
 }
 
+/* Payment Summary Section */
 .payment-summary {
     width: 90%;
     margin-left: 40px;
@@ -291,6 +309,7 @@ p.label-text.error {
     font-weight: bold;
 }
 
+/* Pay Button */
 .pay-button {
     margin-top: 20px;
     background-color: #035846;
@@ -303,6 +322,7 @@ p.label-text.error {
     height: 120px;
 }
 
+/* Checkout Section */
 .checkout {
     display: flex;
     justify-content: space-evenly;
@@ -317,6 +337,7 @@ p.label-text.error {
     margin-left: 20px;
 }
 
+/* Success Modal Section */
 .success-modal {
     display: none;
     justify-content: center;
@@ -346,14 +367,14 @@ p.label-text.error {
     transform: translate(-50%, -50%); 
 }
 
-
-.success-modal .modal-name h3{
+.success-modal .modal-name h3 {
     font-size: 38px;
     font-weight: 400;
     margin-bottom: 20px;
     text-wrap: no-wrap;
 }
 
+/* Checkmark Animation */
 .checkmark {
     background-color: var(--secondary-color);
     color: var(--primary-color);
